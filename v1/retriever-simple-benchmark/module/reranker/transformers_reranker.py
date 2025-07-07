@@ -50,6 +50,7 @@ class Qwen3Reranker(BaseReranker):
         batch_scores = torch.stack([false_vector, true_vector], dim=1)
         batch_scores = torch.nn.functional.log_softmax(batch_scores, dim=1)
         scores = batch_scores[:, 1].exp().tolist()
+        print(scores)
         return scores
     
     def compute_score(self, pairs: list[tuple[str, str]], normalize: bool = True) -> list[float]:
