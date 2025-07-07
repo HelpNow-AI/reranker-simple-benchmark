@@ -1,12 +1,12 @@
 from .base import BaseReranker
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from transformers import Qwen3ForCausalLM
+from transformers import Qwen3ForCausalLM, Qwen3Tokenizer
 
-class TransformersReranker(BaseReranker):
+class Qwen3Reranker(BaseReranker):
     def __init__(self, model_path: str):
         self.reranker = Qwen3ForCausalLM.from_pretrained(model_path).eval()
-        self.tokenizer = AutoTokenizer.from_pretrained(model_path, padding_side='left')
+        self.tokenizer = Qwen3Tokenizer.from_pretrained(model_path, padding_side='left')
         self.token_false_id = self.tokenizer.convert_tokens_to_ids("no")
         self.token_true_id = self.tokenizer.convert_tokens_to_ids("yes")
         self.max_length = 8192
