@@ -36,6 +36,7 @@ class Qwen3Reranker(BaseReranker):
             inputs['input_ids'][i] = self.prefix_tokens + ele + self.suffix_tokens
         inputs = self.tokenizer.pad(inputs, padding=True, return_tensors="pt", max_length=self.max_length)
         for key in inputs:
+            print(self.reranker.device)
             inputs[key] = inputs[key].to(self.reranker.device)
         return inputs
 
