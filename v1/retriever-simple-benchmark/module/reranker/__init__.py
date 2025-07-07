@@ -4,6 +4,7 @@ from .flag_reranker import FlagRerankerType
 from .flag_llm_reranker import FlagLLMRerankerType
 from .flag_llm_lightweight_reranker import LayerWiseFlagLLMRerankerType
 from .mxbai_reranker import MxbaiReranker
+from .transformers_reranker import TransformersReranker
 
 
 def determine_reranker_class(
@@ -31,6 +32,8 @@ def determine_reranker_class(
         )
     elif model_class_lower == "mxbai":
         reranker = MxbaiReranker(model_path=model_name, use_fp16=use_fp16)
+    elif model_class_lower == "transformers":
+        reranker = TransformersReranker(model_path=model_name)
     else:
         print(
             f"Unknown model class; falling back to HuggingFaceReranker: {model_class}"
