@@ -47,3 +47,6 @@ class TransformersReranker(BaseReranker):
         batch_scores = torch.nn.functional.log_softmax(batch_scores, dim=1)
         scores = batch_scores[:, 1].exp().tolist()
         return scores
+    
+    def compute_score(self, pairs: list[tuple[str, str]], normalize: bool = True) -> list[float]:
+        pass
