@@ -36,11 +36,9 @@ class Qwen3Reranker(BaseReranker):
             inputs['input_ids'][i] = self.prefix_tokens + ele + self.suffix_tokens
         inputs = self.tokenizer.pad(inputs, padding=True, return_tensors="pt", max_length=self.max_length)
         for key in inputs:
-            print(self.reranker.device)
             inputs[key] = inputs[key].to(self.reranker.device)
         return inputs
 
-    @torch.no_grad()
     def compute_score_batch(self, query: str, docs: list[str], normalize: bool = False) -> list[float]:
         pairs = [self.format_instruction(self.task, query, doc) for doc in docs]
         inputs = self.process_inputs(pairs)
@@ -50,7 +48,6 @@ class Qwen3Reranker(BaseReranker):
         batch_scores = torch.stack([false_vector, true_vector], dim=1)
         batch_scores = torch.nn.functional.log_softmax(batch_scores, dim=1)
         scores = batch_scores[:, 1].exp().tolist()
-        print(scores)
         return scores
     
     def compute_score(self, pairs: list[tuple[str, str]], normalize: bool = True) -> list[float]:
