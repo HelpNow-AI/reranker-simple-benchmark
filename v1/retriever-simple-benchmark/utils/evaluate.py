@@ -10,7 +10,7 @@ def evaluate_model(
     qd_df: pd.DataFrame,
     valid_dict: dict,
     reranker,
-    batch_size: int = 20,
+    batch_size: int = 16,
 ) -> tuple[
     dict[int, float],  # accuracies
     dict[int, float],  # f1_scores
