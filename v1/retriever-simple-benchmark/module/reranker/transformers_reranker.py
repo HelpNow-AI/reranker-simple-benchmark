@@ -4,14 +4,14 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from transformers import Qwen3ForCausalLM
 
 class Qwen3Reranker(BaseReranker):
-    def __init__(self, model_path: str):
+    def __init__(self, model_path: str, max_length: int = 512):
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"Using device: {device}")
         self.reranker = Qwen3ForCausalLM.from_pretrained(model_path,torch_dtype=torch.float16).to(device).eval()
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, padding_side='left')
         self.token_false_id = self.tokenizer.convert_tokens_to_ids("no")
         self.token_true_id = self.tokenizer.convert_tokens_to_ids("yes")
-        self.max_length = 8192
+        self.max_length = max_length
 
         self.prefix = "<|im_start|>system\nJudge whether the Document meets the requirements based on the Query and the Instruct provided. Note that the answer can only be \"yes\" or \"no\".<|im_end|>\n<|im_start|>user\n"
         self.suffix = "<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n"
