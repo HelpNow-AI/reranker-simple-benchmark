@@ -7,8 +7,8 @@ class Qwen3Reranker(BaseReranker):
     def __init__(self, model_path: str):
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"Using device: {device}")
-        self.reranker = Qwen3ForCausalLM.from_pretrained(model_path).to(device).eval()
-        self.tokenizer = Qwen3Tokenizer.from_pretrained(model_path, padding_side='left')
+        self.reranker = AutoModelForCausalLM.from_pretrained(model_path).to(device).eval()
+        self.tokenizer = AutoTokenizer.from_pretrained(model_path, padding_side='left')
         self.token_false_id = self.tokenizer.convert_tokens_to_ids("no")
         self.token_true_id = self.tokenizer.convert_tokens_to_ids("yes")
         self.max_length = 8192
