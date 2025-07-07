@@ -1,6 +1,7 @@
 import numpy as np
 from mxbai_rerank import MxbaiRerankV2
 from .base import BaseReranker
+import torch
 
 
 class MxbaiReranker(BaseReranker):
@@ -17,7 +18,7 @@ class MxbaiReranker(BaseReranker):
 
         warnings.filterwarnings("ignore")
 
-        self.model = MxbaiRerankV2(model_path)
+        self.model = MxbaiRerankV2(model_path, torch_dtype=torch.float16)
         # Note: use_fp16 and max_length are ignored as MxbaiRerankV2 doesn't expose these options directly
 
     def compute_score_batch(
