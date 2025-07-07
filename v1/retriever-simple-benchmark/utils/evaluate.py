@@ -82,6 +82,7 @@ def batched_compute_score(
     scores = []
     total_docs = len(doc_texts)
     start_idx = 0
+    print(f"도큐먼트 길이 : {len(doc_texts)}")
     while start_idx < total_docs:
         end_idx = min(start_idx + batch_size, total_docs)
         batch_docs = doc_texts[start_idx:end_idx]
