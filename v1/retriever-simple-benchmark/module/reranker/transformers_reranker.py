@@ -1,7 +1,7 @@
 from .base import BaseReranker
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from transformers import Qwen3ForCausalLM, Qwen3Tokenizer
+#from transformers import Qwen3ForCausalLM, Qwen3Tokenizer
 
 class Qwen3Reranker(BaseReranker):
     def __init__(self, model_path: str):
