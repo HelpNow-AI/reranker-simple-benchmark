@@ -18,7 +18,7 @@ class MxbaiReranker(BaseReranker):
 
         warnings.filterwarnings("ignore")
 
-        self.model = MxbaiRerankV2(model_path, torch_dtype=torch.float16)
+        self.model = MxbaiRerankV2(model_path, torch_dtype=torch.float16, max_length=max_length)
         # Note: use_fp16 and max_length are ignored as MxbaiRerankV2 doesn't expose these options directly
 
     def compute_score_batch(
